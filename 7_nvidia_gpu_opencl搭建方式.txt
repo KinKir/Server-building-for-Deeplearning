@@ -1,0 +1,18 @@
+前期条件：机器显卡的驱动和cuda正确安装，opencl对应的库在安装cuda时已经带上了，在目录/usr/local/cuda/lib64可以看到相关的opencl文件
+
+在https://developer.nvidia.com/opencl，可以下载一些NVIDIA OpenCL SDK Code Samples，里面有个文档介绍该怎么做，我这总结一下：
+1.下载nvidia_computing_sdk,网址：https://developer.nvidia.com/cuda-toolkit-40
+2.安装nvidia_computing_sdk: ./gpucomputingsdk_4.0.17_linux.run
+中间需要用户选择安装路径，和cuda库的路径，默认即可
+3.安装一些ubuntu下没有的相关的库：sudo apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libgl1-mesa-glx libglu1-mesa libglu1-mesa-dev
+4.进入NVIDIA_GPU_Computing_SDK/OpenCL
+cd /home/ubuntu-server/NVIDIA_GPU_Computing_SDK/OpenCL
+make
+5.进入/home/ubuntu-server/NVIDIA_GPU_Computing_SDK/OpenCL/bin/linux/release或者debug，有编译生成的可执行文件
+./文件名
+即可执行
+
+
+
+
+

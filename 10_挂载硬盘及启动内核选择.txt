@@ -1,0 +1,19 @@
+选择固定的linux内核启动
+
+进入配置文件夹：
+cd /etc/default/
+sudo gedit grub
+修改等号后面的内容为我们需要的内核版本
+GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 4.4.0-72-generic"
+保存
+
+sudo update-grub
+
+sudo reboot
+
+
+开机自动挂载硬盘
+参考http://blog.csdn.net/GoDevelop/article/details/52314501?locationNum=2
+sudo gedit /etc/fstab
+添加一句话
+/dev/sdb3        /media/ubuntu-server/DataSt     ntfs        auto     0 0

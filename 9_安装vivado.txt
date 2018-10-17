@@ -1,0 +1,35 @@
+http://blog.csdn.net/cirs_q/article/details/60963176
+
+解压安装包后，进入压缩包文件夹下
+sudo ./xsetup
+安装,使用默认设置，路劲也默认
+
+安装结束后安装下载器驱动进入/opt/Xilinx/Vivado/2016.4/data/xicom/cable_drivers/lin64/install_script/install_drivers：
+cd /opt/Xilinx/Vivado/2016.4/data/xicom/cable_drivers/lin64/install_script/install_drivers
+sudo ./install_drivers
+
+
+此时打开SDK会出错，需要修改一下内容，进入/opt/Xilinx/SDK/2016.4/eclipse/lnx64.o
+cd /opt/Xilinx/SDK/2016.4/eclipse/lnx64.o
+sudo gedit eclipse.ini
+将
+
+--launcher.GTK_version
+2
+
+添加到com.xilinx.sdk.product下一行即可，添加后全文如下
+
+
+
+-startup
+plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.300.v20150602-1417
+-showsplash
+com.xilinx.sdk.product
+--launcher.GTK_version
+2
+-vmargs
+-Xms64m
+-Xmx512m
+

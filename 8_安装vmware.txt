@@ -1,0 +1,2 @@
+安装vmware
+直接双击vmware即可安装

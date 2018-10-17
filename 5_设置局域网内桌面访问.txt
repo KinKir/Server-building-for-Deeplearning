@@ -1,0 +1,29 @@
+说明：
+xrdp支持xfce4和mate桌面,不支持gnome和ubuntu桌面
+
+1.安装桌面环境：
+sudo apt-get install mate-core mate-desktop-environment mate-notification-daemon
+
+2.安装tightvncserver：
+sudo apt-get install tightvncserver
+
+3.安装xrdp：
+sudo apt-get install xrdp
+
+4.配置xrdp：
+echo mate-session >~/.xsession
+vim /etc/xrdp/startwm.sh
+在./etc/X11/Xsession前插入
+mate-session
+
+5重启xrdp
+sudo /etc/init.d/xrdp restart
+或者
+sudo service xrdp restart
+
+注意：
+如果要卸载xrdp和tightvncserver，指令如下：
+sudo apt-get purge xrdp
+sudo apt-get purge tightvncserver
+
+一定要先装tightvncserver后装xrdp,不能够装vnc4server，已改为tightvncserver.
