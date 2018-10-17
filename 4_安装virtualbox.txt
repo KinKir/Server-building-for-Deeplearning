@@ -1,0 +1,6 @@
+到官网下载ubuntu版本的virtualbox
+1.先安装依赖项
+sudo apt-get install libqt5x11extras5 libsdl1.2debian
+
+2.安装virtualbox
+sudo dpkg -i virtualbox-5.1_5.1.22-115126~Ubuntu~xenial_amd64.deb
