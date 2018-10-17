@@ -1,0 +1,59 @@
+到http://opencv.org/releases.html下载opencv源码，如果安装opencv3的话需要下载contrib：https://github.com/opencv/opencv_contrib
+两个文件解压到同一个文件夹下
+1.安装依赖库：
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get remove x264 libx264-dev
+sudo apt-get install build-essential checkinstall cmake pkg-config yasm gfortran git
+sudo apt-get install libjpeg8-dev libjasper-dev libpng12-dev
+# If you are using Ubuntu 14.04
+sudo apt-get install libtiff4-dev
+# If you are using Ubuntu 16.04
+sudo apt-get install libtiff5-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
+sudo apt-get install libxine2-dev libv4l-dev
+sudo apt-get install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install libqt4-dev libgtk2.0-dev libtbb-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libfaac-dev libmp3lame-dev libtheora-dev
+sudo apt-get install libvorbis-dev libxvidcore-dev
+sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev
+sudo apt-get install x264 v4l-utils
+sudo apt-get install python-numpy  
+
+
+上面指令如果出现下载 ippicv_linux_20151201失败
+参考http://blog.csdn.net/huangkangying/article/details/53406370，手动下载该文件，放到和opencv3同一个文件夹下，然后在terminal进入opencv路径下，执行下列命令：
+
+ipp_file=../ippicv_2017u3_lnx_intel64_general_20170822.tgz             &&
+ipp_hash=$(md5sum $ipp_file | cut -d" " -f1)      &&
+ipp_dir=3rdparty/ippicv/downloads/linux-$ipp_hash &&
+
+mkdir -p $ipp_dir &&
+cp $ipp_file $ipp_dir
+
+完成上面的指令后再次进入release文件夹下，执行下面命令
+
+mkdir release
+cd release/
+cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
+（这个语句还可以修改，需要再了解）
+
+make -j2
+sudo make install
+
+
+
+
+卸载opencv方法
+进入opencv的目录下，（或者opencv/release目录下）
+执行：
+sudo make uninstall
+cd ..
+rm -rf release
+
+sudo rm -r /usr/local/include/opencv2 /usr/local/include/opencv /usr/include/opencv /usr/include/opencv2 /usr/local/share/opencv /usr/local/share/OpenCV /usr/share/opencv /usr/share/OpenCV /usr/local/bin/opencv* /usr/local/lib/libopencv
+
+
+
+

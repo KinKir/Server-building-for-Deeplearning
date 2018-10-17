@@ -1,0 +1,29 @@
+gcc或者g++调试工具gdb
+1.
+通过g++编译的c++代码如果要进行调试的话，在编译的时候需要增加条件，如下：
+g++ -o test test.c -g
+
+2.在terminal输入gdb test进入调试环境
+l：列出部分代码
+
+break line_number：在line_number行出加入断点
+
+info break：查看断点信息
+
+whatis p：显示p的数据类型
+
+
+
+n：执行下一句话
+
+s：进入函数
+
+j line_number：跳到line_number那一行
+
+print var：打印var的值
+
+continue：没有断点持续运行
+
+finish：结束当前程序调试
+
+q：退出gdb

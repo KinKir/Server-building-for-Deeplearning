@@ -1,0 +1,37 @@
+http://blog.csdn.net/minione_2016/article/details/53313271
+
+直接挂载在media下面就行了，创建个matlab文件夹供挂载，只要挂第一个
+
+sudo mkdir /media/matlab
+sudo mount -o loop R2016b_glnxa64_dvd1.iso /media/matlab/
+
+
+安装
+
+进入到挂载目录下,可以发现有install文件，然后返回当前目录的前一层进安装。这里推荐第二种装法
+
+方案一：这里如果直接用sudo ./install，可能会报如下的错，attention: must install using sudo or su,or will face cannot build directory failure later，如果安装的时候没有弹出图形安装界面，直接显示installing… finish! 则需要gksudo 或kdesudo 来安装。
+
+方案二：
+
+cd /media/matlab
+ls  #这里会看到install
+cd ..  
+sudo /media/matlab/install   
+
+* 安装到一半，提示拔出dvd1，然后插入dvd2对话框*
+新打开个终端
+
+sudo mount -o loop R2016b_glnxa64_dvd2.iso /media/matlab/
+
+激活
+
+cd /home/XXX/software/MATLAB/bin/
+./matlab      #运行matlab，弹出激活对话框，选择用不联网的方法进行激活，加载license_standalone.lic文件
+
+sudo chmod -R 777 MATLAB/ #文件夹上面有个锁，为了防止复制不进去，保险起见
+cd ~/LinuxR2016b/bin/glnxa64/ #先进入要复制的文件所在文件夹 
+sudo cp lib* /home/XXX/software/MATLAB/bin/glnxa64/
+cd /home/XXX/software/MATLAB/bin/
+./matlab #可以打开了，如果打不开，重启下终端
+

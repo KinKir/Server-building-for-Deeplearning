@@ -1,0 +1,53 @@
+任务需求:搭建ftp服务器，让用户可以通过ftp下载指定的文件夹下的文件，不能访问别的文件夹
+1.安装vsftpd:
+sudo apt  install vsftpd
+
+2.进入/etc
+cd /etc
+
+3.备份配置文件，防止改错了改不回去
+sudo cp vsftpd.conf vsftpd.conf.old
+
+4.编辑配置文件
+sudo gedit vsftpd.conf
+注意:以下设置有些配置文件里面注释，有些没有，自己添加 
+anoymous_enable=NO
+local_root=用户只能访问的路径
+（注意:该路径的权限最好为755，这次设置硬盘分区路径里面/media/ubuntu-server/DataSt/HASS2017/SOFTWARE文件权限改不了，只有在media路径的那一层/media/ubuntu-server/文件夹可以设置成755)
+
+local_enable=YES
+
+不单独建立ftp用户，用户用自己的账号登录即可
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd.chroot_list
+
+5.添加信任用户的用户名到文件/etc/vsftpd.chroot_list
+sudo gedit /etc/vsftpd.chroot_list
+
+
+
+
+
+使用方法:
+linux
+打开terminal
+1.打开linux下的ftp服务
+ftp
+2.连接服务器
+open 服务器IP地址
+输入用户名和密码
+3.进入到需要文件的路径下
+cd /DataSt/HASS2017/SOFTWARE
+4.下载文件
+get 需要的文件名
+
+注意:在ftp服务下，ls指令可以查看当前文件夹下的文件
+
+
+windows
+1.打开浏览器
+2.地址框输入 服务器IP地址/文件路径，如:
+ftp://192.168.1.20/DataSt/HASS2017/
+然后按照提示输入用户名和密码
+3.点击需要的文件即可下载
+

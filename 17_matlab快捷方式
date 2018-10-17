@@ -1,0 +1,15 @@
+sudo gedit /usr/share/applications/matlab.desktop
+
+增加一下语句，Exec，Icon可能和用户的安装路径不同而有所变化
+[Desktop Entry]
+Encoding=UTF-8
+Name=Matlab 2016b
+Comment=MATLAB
+Exec=/usr/local/MATLAB/R2016b/bin/matlab
+Icon=//usr/local/MATLAB/R2016b/toolbox/shared/dastudio/resources/MatlabIcon.png
+Terminal=true
+StartupNotify=true
+Type=Application
+Categories=Application;
+
+保存后在就可以从applications打开，如果要添加到侧栏中，可以从applications中拖到侧栏，但是打开后lock的方式不好使

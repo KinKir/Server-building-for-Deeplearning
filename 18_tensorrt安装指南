@@ -1,0 +1,90 @@
+参考链接：http://docs.nvidia.com/deeplearning/sdk/tensorrt-install-guide/index.html
+一些有用的指令
+whereis ftp：找到ftp的安装路径
+dpkg -s firefox：查看是否安装firefox 
+
+
+1.需要保证计算卡正常工作（1）安装驱动；（2）安装cuda toolkit；（3）安装cudnnn；参考1_安装显卡驱动和cuda
+
+2.安装pycuda，参考https://wiki.tiker.net/PyCuda/Installation/Linux
+Step 1: Download and unpack PyCUDA
+
+Download PyCUDA and unpack it下载pycuda并解压（我是放在自己的用户路径下）:
+$ tar xfz pycuda-VERSION.tar.gz
+
+Step 2: Install Numpy
+sudo apt-get install python-numpy
+
+Step 3: Build PyCUDA
+Next, just type下列安装cuda的路径应该是/usr/local/cuda-8.0:
+$ cd pycuda-VERSION # if you're not there already
+$ python configure.py --cuda-root=/where/ever/you/installed/cuda
+$ sudo make install
+
+Also note that you will (probably) have to change the value of :option:--cuda-root. If you want to install PyCUDA to your home folder, you need to edit the setup.py call in the Makefile by appending for example "--home=/home/username/local" to the line after the install directive. Make sure that the lib/python folder under the folder you specified is also in PYTHONPATH.
+Once that works, congratulations! You've successfully built PyCUDA.
+Note that this step may automatically look for and, if necessary, install a number of Python packages from the Python package index. These packages are listed under install_requires in PyCUDA's install control file.
+
+Step 4: Test PyCUDA
+If you'd like to be extra-careful, you can run PyCUDA's unit tests:
+$ cd pycuda-VERSION/test
+$ python test_driver.py
+
+
+3.安装tensorrt，根据第一行提供的链接中提到了两种安装方式，一个是下载deb文件（需要保证cuda是通过deb文件安装的），第二种是下载tar文件进行手动安装（我选择这一种，因为cuda是通过.run文件安装）
+（1）下载tensorrt
+Go to: https://developer.nvidia.com/tensorrt.
+Click Download.
+
+（如果之前安装了cudnn6，可以不用卸载，两者兼容，安装方式见http://developer.download.nvidia.com/compute/machine-learning/cudnn/secure/v7.0.5/prod/Doc/cuDNN-Installation-Guide.pdf?lhVqCYQVpz8rm1i-dFVdbWbRSBXl3dkHokIy21w-IKqksQh8HG8avQkJXv0hJsGzHe3uvLlcf1eeakU-Q3F47ESnxKxEXbOQg5tSV93GnJIwBSPRCxRbVH9poRjOn_uwPdkT2VUWKOTaw0pCxcd1FkzGBT5Zj4-7NVCg1GUWyd-lV2--telyIHW-N4MOmdJ-Pg， 不需要修改软连接，可以修改，就是怕各种版本出问题 ）
+    Install the following dependencies, if not already present:
+        Install the CUDA Toolkit v8.0 or 9.0
+        cuDNN 7.0.5 
+        Python 2 or Python 3
+    Choose where you want to install. This tar file will install everything into a directory called TensorRT-3.x.x, where 3.x.x is your TensorRT version. This directory will have sub-directories like lib, include, data, etc…
+（2）解压文件，我是放在用户文件夹下
+    $ tar xzvf TensorRT-3.x.x.Ubuntu-16.04.3.x86_64.cuda-9.0.cudnn7.0.tar.gz
+    $ ls TensorRT-3.x.x
+    bin  data  doc  include  lib  python  samples  targets  TensorRT-Release-Notes.pdf  uff
+
+（3）将tensorrt的库路径添加到环境变量中（很重要，不然在make或者运行的时候会一直提示找不到库）
+    gedit ~/.bashrc
+    在文件中最后几行添加下面这一行语句
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<eg:TensorRT-3.x.x/lib>
+
+（4）安装Python的支持库
+    Install the Python TensorRT package, for example:
+    $ cd TensorRT-3.x.x/python
+
+    If using Python 2.7:
+    $ sudo pip2 install tensorrt-3.x.x-cp27-cp27mu-linux_x86_64.whl
+
+    If using Python 3.5:
+    $ sudo pip3 install tensorrt-3.x.x-cp35-cp35m-linux_x86_64.whl
+
+    通过下面这句语句查找tensorrt安装路径
+    $ which tensorrt
+    /usr/local/bin/tensorrt
+
+（5）安装uff模型转换工具
+    Install the Python UFF package, for example:
+    $ cd TensorRT-3.x.x/uff
+    $ sudo pip2 install uff-0.2.0-py2.py3-none-any.whl
+    $ which convert-to-uff
+    /usr/local/bin/convert-to-uff
+
+（6）在Python，/usr/local/lib/python2.7/dist-packages/tensorrt/examples/custom_layers/tensorrtplugins，修改setup.py文件，修改下面两句话
+        Change TENSORRT_INC_DIR to point to the <TAR_INSTALL_ROOT>/include directory.
+        Change TENSORRT_LIB_DIR to point to <TAR_INSTALL_ROOT>/lib directory.
+
+（7）验证是否安装成功:
+       $ cd /home/ubuntu-server/my_cuda/4_tensorrt/TensorRT-3.0.4/samples/sampleMNIST
+       $ make clean
+       $ make
+    生成的可执行文件在/home/ubuntu-server/my_cuda/4_tensorrt/TensorRT-3.0.4/bin
+       $ cd /home/ubuntu-server/my_cuda/4_tensorrt/TensorRT-3.0.4/bin
+       $ ./sampleMNIST
+    识别手写数字3，成功
+
+
+      

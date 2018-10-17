@@ -1,0 +1,40 @@
+makefile学习笔记
+
+
+（1）
+objects = main.o lib1.o      # 将编译主函数需要的文件链接名存在objects变量中，后续要是添加新的.o文件之间在objects后面添加即可，无需在底下添加
+main : $(objects)
+	g++ -o main $(objects)   # 
+main.o : main.cpp lib1.h 
+	g++ -c main.cpp
+lib1.o : lib1.cpp 
+	g++ -c lib1.cpp
+
+clean:
+	-rm -f *.o
+	
+（2）
+关于gcc指令：
+有helloworld.c文件如下：
+#include <stdio.h>
+int main()
+{
+        printf("helloworld!\n");
+        return 0;
+}
+
+使用如下gcc命令，将在同一文件目录下生成a.out可执行文件，在terminal中运行该文件即可在屏幕中打印出helloworld!：
+$　　gcc helloworld.c
+使用如下gcc命令，将在同一文件目录下生成helloworld.o二进制文件，它可以被用来连接文件：
+$    gcc -c helloworld.c
+如果要生成特定名称的可执行文件，可以使用如下gcc命令，它将生成helloworld可执行文件，区别于a.out可执行文件，在termianl执行它可以打印出helloworld!：
+$    gcc helloworld.c -o helloworld
+以上三种gcc命令，主要区别是参数不同，-c和-o的区别在于，-c只编译不连接，故只生成.o的二进制文件，-o即指定名称输出可执行文件。对于单个或者几个的源文件，使用gcc命令即可，但是一旦文件具有依赖关系，
+gcc命令的执行顺序是需要规定的，否则无法顺序编译项目，这是gcc命令的缺点，而makefile区别于gcc命令的地方正在于它能规定好文件间的依赖关系，以及加入依赖的库文件和头文件。
+
+
+
+文中特殊字符说明如下：$@--目标文件，$^--所有的依赖文件，$<--第一个依赖文件。比如在如下的代码中，$@代表DSRC_module.cpp，$<代表第一个依赖文件，也就是DSRC_module.cpp。
+示例代码中出现了变量，makefile中变量采用$(变量)的方法使用
+
+gcc -Wall 一般使用该选项，允许发出GCC能够提供的所有有用的警告。也可以用-W{warning}来标记指定的警告。 
