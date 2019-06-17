@@ -1,0 +1,12 @@
+vim~/.ssh/config 文件，添加如下：
+
+Host *
+    ForwardAgent yes
+    ServerAliveInterval 3
+    ServerAliveCountMax 20
+    TCPKeepAlive no
+    # Make connect faster
+    ControlMaster auto
+    ControlPath ~/.ssh/%h-%p-%r
+    ControlPersist 4h
+    Compression yes
